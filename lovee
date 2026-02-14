@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Наша История</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
+
+<style>
+body{
+margin:0;
+background:#0f1020;
+overflow:hidden;
+font-family:'Playfair Display', serif;
+color:#fff;
+}
+
+/* ===== МОДАЛКА ===== */
+.modal{
+position:fixed;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.92);
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:100;
+text-align:center;
+padding:20px;
+}
+
+.modal h1{
+font-family:'Great Vibes', cursive;
+font-size:2.5rem;
+}
+
+.modal button{
+margin:10px;
+padding:14px 30px;
+border:none;
+border-radius:30px;
+font-size:1rem;
+background:#ff6f91;
+color:white;
+cursor:pointer;
+}
+
+/* ===== КНИГА ===== */
+.book{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:95vw;
+height:92vh;
+max-width:1100px;
+perspective:2000px;
+display:none;
+}
+
+.page{
+position:absolute;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#1f2235,#141526);
+padding:30px;
+box-sizing:border-box;
+overflow:auto;
+display:none;
+animation:fade 1s ease;
+border-radius:20px;
+}
+
+.page.active{display:block;}
+
+h2{
+font-family:'Great Vibes', cursive;
+font-size:2.5rem;
+color:#ffccd5;
+text-align:center;
+}
+
+p{
+font-size:1.1rem;
+line-height:1.7;
+margin-top:20px;
+text-align:center;
+}
+
+.photo{
+width:100%;
+border-radius:20px;
+margin-top:20px;
+}
+
+.next{
+margin-top:25px;
+text-align:center;
+cursor:pointer;
+font-size:1rem;
+opacity:0.8;
+}
+
+/* ===== СВЕЧИ ===== */
+.candle{
+position:absolute;
+bottom:10px;
+width:20px;
+height:60px;
+background:#fff3cd;
+border-radius:5px;
+}
+
+.flame{
+position:absolute;
+top:-20px;
+left:50%;
+transform:translateX(-50%);
+width:12px;
+height:20px;
+background:orange;
+border-radius:50%;
+animation:flicker 0.2s infinite alternate;
+}
+
+@keyframes flicker{
+from{transform:translateX(-50%) scale(1);}
+to{transform:translateX(-50%) scale(1.2);}
+}
+
+/* ===== ЛЕПЕСТКИ ===== */
+.petal{
+position:absolute;
+width:15px;
+height:15px;
+background:pink;
+border-radius:50% 50% 50% 0;
+opacity:0.7;
+animation:fall linear infinite;
+}
+
+@keyframes fall{
+to{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ===== ЗВЁЗДЫ ===== */
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+background:black;
+display:none;
+overflow:hidden;
+}
+
+.star{
+position:absolute;
+background:white;
+border-radius:50%;
+}
+
+.shooting{
+position:absolute;
+width:150px;
+height:2px;
+background:linear-gradient(-45deg,white,transparent);
+animation:shoot 2s linear forwards;
+}
+
+@keyframes shoot{
+from{transform:translateX(-200px);}
+to{transform:translateX(120vw) translateY(50vh);}
+}
+
+.wish{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-family:'Great Vibes', cursive;
+font-size:2.5rem;
+opacity:0;
+animation:fadeIn 4s forwards 2s;
+}
+
+@keyframes fadeIn{to{opacity:1;}}
+@keyframes fade{from{opacity:0;} to{opacity:1;}}
+</style>
+</head>
+
+<body>
+
+<!-- ЗАЙЧИК С ВОПРОСОМ -->
+<div class="modal" id="modal">
+<div style="font-size:70px;">🐰💖</div>
+<h1>Будешь ли ты моей Валентинкой?</h1>
+<button onclick="start()">Да</button>
+<button onclick="beg()">Нет</button>
+<p id="begText"></p>
+</div>
+
+<!-- КНИГА -->
+<div class="book" id="book">
+
+<div class="page active">
+<h2>25.10.2022</h2>
+<p>
+В тот день всё началось.  
+Обычная дата стала особенной.  
+С неё началась наша история.
+</p>
+<img src="photo1.jpg" class="photo">
+<div class="next" onclick="next()">Дальше →</div>
+</div>
+
+<div class="page">
+<p>
+Спасибо тебе за тепло.  
+За улыбки.  
+За моменты, которые хочется проживать снова.
+</p>
+<img src="photo2.jpg" class="photo">
+<div class="next" onclick="next()">Дальше →</div>
+</div>
+
+<div class="page">
+<p>
+Если однажды тебе станет грустно —  
+вспомни, как мы смеялись.  
+Вспомни, как всё начиналось.
+</p>
+<img src="photo3.jpg" class="photo">
+<div class="next" onclick="next()">Дальше →</div>
+</div>
+
+<div class="page">
+<p>
+Я хочу, чтобы твоя жизнь была долгой,  
+спокойной и счастливой.  
+И если возможно — со мной.
+</p>
+<div class="next" onclick="next()">Дальше →</div>
+</div>
+
+<div class="page">
+<p>
+Любовь — это не идеальность.  
+Это выбор.  
+Каждый день.
+</p>
+<div class="next" onclick="next()">Последняя →</div>
+</div>
+
+<div class="page">
+<h2>Спасибо, что ты есть в моей жизни ❤️</h2>
+<p>Пусть падающая звезда услышит твое желание.</p>
+<div class="next" onclick="showStars()">Смотреть небо →</div>
+</div>
+
+</div>
+
+<!-- ЗВЁЗДНОЕ НЕБО -->
+<div class="stars" id="stars"></div>
+
+<audio id="music" loop>
+<source src="Dönmek.mp3" type="audio/mp3">
+</audio>
+
+<script>
+let modal=document.getElementById("modal");
+let book=document.getElementById("book");
+let music=document.getElementById("music");
+
+function start(){
+modal.style.display="none";
+book.style.display="block";
+music.play();
+createPetals();
+createCandles();
+}
+
+let begs=["Пожалуйста...","Ну пожалуйста...","Подумай ещё раз...","Зайчик расстроится..."];
+function beg(){
+document.getElementById("begText").innerText=
+begs[Math.floor(Math.random()*begs.length)];
+}
+
+let pages=document.querySelectorAll(".page");
+let current=0;
+function next(){
+pages[current].classList.remove("active");
+current++;
+pages[current].classList.add("active");
+}
+
+function createPetals(){
+for(let i=0;i<20;i++){
+let p=document.createElement("div");
+p.className="petal";
+p.style.left=Math.random()*100+"vw";
+p.style.animationDuration=(5+Math.random()*5)+"s";
+document.body.appendChild(p);
+}
+}
+
+function createCandles(){
+for(let i=0;i<3;i++){
+let c=document.createElement("div");
+c.className="candle";
+c.style.left=(20+i*40)+"%";
+let f=document.createElement("div");
+f.className="flame";
+c.appendChild(f);
+document.body.appendChild(c);
+}
+}
+
+function showStars(){
+book.style.display="none";
+let sky=document.getElementById("stars");
+sky.style.display="block";
+
+// обычные звёзды
+for(let i=0;i<300;i++){
+let s=document.createElement("div");
+s.className="star";
+s.style.width=s.style.height=Math.random()*3+"px";
+s.style.top=Math.random()*100+"vh";
+s.style.left=Math.random()*100+"vw";
+sky.appendChild(s);
+}
+
+// падающая звезда
+let shooting=document.createElement("div");
+shooting.className="shooting";
+shooting.style.top="20%";
+sky.appendChild(shooting);
+
+// надпись
+let text=document.createElement("div");
+text.className="wish";
+text.innerText="Спасибо, что ты есть в моей жизни ❤️";
+sky.appendChild(text);
+}
+</script>
+
+</body>
+</html>
